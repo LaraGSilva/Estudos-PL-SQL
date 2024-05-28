@@ -36,3 +36,17 @@ FOREIGN KEY (localizacao_id)
 Atenção: É para escrever a instrução com um insert. Soluções com mais de um insert serão consideradas incorretas.
 
 '''
+
+'''
+Você é um analista de dados encarregado de criar uma visão que permita uma análise mais eficiente dos dados de poluição em diferentes localizações. Sua tarefa é criar uma visão chamada "VisaoPoluicao" que contenha as seguintes informações:
+• O nome da localização.
+• A data da ocorrência da poluição.
+• O tipo de poluente.
+• A concentração do poluente.
+REFERENCES
+Ordene a saída por ordem crescente concentração.
+Atenção, garanta que nenhuma operação DML seja executada por meio a utilização da visão.
+Após consultar a visão a saída deve ser a seguinte:
+select * from visaopoluicao;
+
+'''
