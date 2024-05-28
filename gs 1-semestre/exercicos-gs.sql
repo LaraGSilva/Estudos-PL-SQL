@@ -1,0 +1,2 @@
+''' 1) Utilizando a estrutura WITH/CTE, escreva uma consulta SQL que calcule a temperatura média em cada local com base nas informações de condições ambientais.
+Exiba o nome de cada local junto com sua respectiva temperatura média. Atenção: Soluções diferentes da instrução WITH serão consideradas incorretas ''' 
