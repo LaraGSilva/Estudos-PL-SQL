@@ -4,3 +4,35 @@ Exiba o nome de cada local junto com sua respectiva temperatura média. Atençã
 ''' 
 Utilizando as tabelas localizacoes, condicoes_ambientais e poluicoes, escreva uma consulta para exibir o nome da localização, a data das condições ambientais, o tipo de poluente e a média da temperatura, ordenando os resultados pelos nomes das localizações, datas das condições ambientais e tipos de poluentes das localizações 'Baía de Guanabara' e 'Recife de Tubbataha', para os poluentes 'Sedimentos' e 'Mercúrio'.
 '''
+
+''' 
+) Antes de realizar esse exercício, execute as instruções a seguir:
+   drop table poluicoes_grave;
+   drop table poluicoes_comum;
+   CREATE TABLE poluicoes_grave (
+       poluicao_id INT PRIMARY KEY,
+       localizacao_id INT,
+       data DATE,
+tipo_poluente VARCHAR2(50),
+concentracao FLOAT,
+descricao CLOB,
+nome_localizacao VARCHAR2(100),
+FOREIGN KEY (localizacao_id)
+   localizacoes(localizacao_id));
+   CREATE TABLE poluicoes_comum (
+       poluicao_id INT PRIMARY KEY,
+       localizacao_id INT,
+       data DATE,
+tipo_poluente VARCHAR2(50),
+concentracao FLOAT,
+descricao CLOB,
+nome_localizacao VARCHAR2(100),
+FOREIGN KEY (localizacao_id)
+   localizacoes(localizacao_id));
+
+   Escreva UMA instrução para inserir em massa os dados nas tabelas poluicoes_grave e poluicoes_comum com base na concentração dos poluentes, de acordo com a regra a seguir:
+• Se a concentração for maior que 10, insira na tabela poluicoes_grave.
+• Caso contrário, insira na tabela poluicoes_comum.
+Atenção: É para escrever a instrução com um insert. Soluções com mais de um insert serão consideradas incorretas.
+
+'''
