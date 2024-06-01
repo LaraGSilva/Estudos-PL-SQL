@@ -60,3 +60,12 @@ with loc_med as (
     avg_temp as (select nome, ROUND(AVG(temperatura), 2) from loc_med group by nome)
     select * from avg_temp
     order by nome asc;
+
+
+select l.nome,  c.data, p.tipo_poluente, AVG(c.temperatura)
+from PF0645.LOCALIZACOES l 
+left join PF0645.CONDICOES_AMBIENTAIS c on l.localizacao_id = c.localizacao_id
+left join PF0645.POLUICOES p on l.localizacao_id = p.localizacao_id
+where p.tipo_poluente in ('Sedimentos','Mercúrio') and l.nome in ('Baía de Guanabara', 'Recife de Tubbataha')
+group by l.nome, c.data, p.tipo_poluente
+order by l.nome asc, c.data asc, p.tipo_poluente asc; 
