@@ -50,3 +50,13 @@ Após consultar a visão a saída deve ser a seguinte:
 select * from visaopoluicao;
 
 '''
+
+with loc_med as (
+        select l.localizacao_id, l.nome, c.temperatura
+        from PF0645.LOCALIZACOES l
+        left join PF0645.CONDICOES_AMBIENTAIS c
+        on l.localizacao_id = c.localizacao_id
+    ),
+    avg_temp as (select nome, ROUND(AVG(temperatura), 2) from loc_med group by nome)
+    select * from avg_temp
+    order by nome asc;
