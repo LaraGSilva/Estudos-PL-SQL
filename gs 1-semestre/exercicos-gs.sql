@@ -50,7 +50,7 @@ Após consultar a visão a saída deve ser a seguinte:
 select * from visaopoluicao;
 
 '''
-
+exc1
 with loc_med as (
         select l.localizacao_id, l.nome, c.temperatura
         from PF0645.LOCALIZACOES l
@@ -69,3 +69,60 @@ left join PF0645.POLUICOES p on l.localizacao_id = p.localizacao_id
 where p.tipo_poluente in ('Sedimentos','Mercúrio') and l.nome in ('Baía de Guanabara', 'Recife de Tubbataha')
 group by l.nome, c.data, p.tipo_poluente
 order by l.nome asc, c.data asc, p.tipo_poluente asc; 
+
+exc 2
+
+drop table poluicoes_grave;
+drop table poluicoes_comum;
+
+CREATE TABLE poluicoes_grave (
+    poluicao_id         INT PRIMARY KEY,
+    localizacao_id      INT,
+    data                DATE,
+    tipo_poluente       VARCHAR2(50),
+    concentracao        FLOAT,
+    descricao           CLOB,
+    nome_localizacao    VARCHAR2(100),
+    FOREIGN KEY (localizacao_id) REFERENCES PF0645.LOCALIZACOES(localizacao_id)
+);
+
+CREATE TABLE poluicoes_comum (
+    poluicao_id         INT PRIMARY KEY,
+    localizacao_id      INT,
+    data                DATE,
+    tipo_poluente       VARCHAR2(50),
+    concentracao        FLOAT,
+    descricao           CLOB,
+    nome_localizacao    VARCHAR2(100),
+    FOREIGN KEY (localizacao_id) REFERENCES PF0645.LOCALIZACOES(localizacao_id)
+);
+
+exc3 
+INSERT FIRST 
+    WHEN concentracao > 10 THEN
+        into poluicoes_grave (poluicao_id, localizacao_id, data, tipo_poluente, concentracao, descricao, nome_localizacao)
+    WHEN concentracao < 10 THEN
+        into poluicoes_comum (poluicao_id, localizacao_id, data, tipo_poluente, concentracao, descricao, nome_localizacao)
+    select 
+        p.id as poluicao_id,
+        p.localizacao_id as localizacao_id,
+        p.data as data,
+        p.tipo_poluente as tipo_poluente,
+        p.concentracao as concentracao,
+        p.descricao as descricao,
+        l.nome as nome_localizacao
+    from PF0645.LOCALIZACOES l  left join PF0645.POLUICOES p on l.localizacao_id = p.localizacao_id;
+    
+select * from poluicoes_grave;
+select * from poluicoes_comum;
+
+exc 4
+create or replace view VisaoPoluicao as
+select 
+    l.nome as nome_localizacao,
+    p.data as data_ocorrencia,
+    p.tipo_poluente as tipo_poluente,
+    p.concentracao as concentracao
+from PF0645.LOCALIZACOES l  left join PF0645.POLUICOES p on l.localizacao_id = p.localizacao_id 
+order by concentracao asc
+with read only;
